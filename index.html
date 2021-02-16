@@ -12,18 +12,20 @@
         async function sendForm() {
             const phoneNumber = document.getElementById("phoneInput");
             const emailField = document.getElementById("emailInput");
+            const textField = document.getElementById("textInput");
 
             const phoneRegExp = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
             const emailRegExp = /\^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
             let email = String(emailField.value);
             let number = String(phoneNumber.value).replace("+", "");
+            let text = String(textField.value);
 
             let nl = `%0D%0A`;
             let chat = `298784500`;
             let method = 'sendMessage';
             let token = `1685766795:AAGrFBTfS8Uo5cEXZ6HpIivCCm8Kf9JYeME`;
-            let message = `*Phone:* _${number}_${nl}*Email:* _${email}_`;
+            let message = `*Phone:* _${number}_${nl}*Email:* _${email}_${nl}*Message*: _${text}_`;
             let request = `https://api.telegram.org/bot${token}/${method}?chat_id=${chat}&text=${message}&parse_mode=Markdown`;
 
             if (email.length !== 0 && number.length !== 0) {
@@ -58,12 +60,17 @@
             </div>
 
             <div class="form-floating">
+                <input type="textarea" class="form-controll" id="textInput" value="" placeholder="text" required>
+                <label for="textInput">Your Message</label>
+            </div>
+
+            <div class="form-floating">
                 <button class="form-button" id="request" onclick="sendForm()">Send</button>
                 <input type="checkbox" id="checkboxInput">
                 <span>subscribe to mail</span>
             </div>
 
         </div>
-        
+
     </body>
 </html>
