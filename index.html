@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./styles/main.css">
+        <title>Form</title>
+    </head>
+
+    <script>
+        async function sendForm() {
+            const phoneNumber = document.getElementById("phoneInput");
+            const emailField = document.getElementById("emailInput");
+
+            const phoneRegExp = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
+            const emailRegExp = /\^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+            let email = String(emailField.value);
+            let number = String(phoneNumber.value).replace("+", "");
+
+            let nl = `%0D%0A`;
+            let chat = `298784500`;
+            let method = 'sendMessage';
+            let token = `1685766795:AAGrFBTfS8Uo5cEXZ6HpIivCCm8Kf9JYeME`;
+            let message = `*Phone:* _${number}_${nl}*Email:* _${email}_`;
+            let request = `https://api.telegram.org/bot${token}/${method}?chat_id=${chat}&text=${message}&parse_mode=Markdown`;
+
+            if (email.length !== 0 && number.length !== 0) {
+                let response = await fetch(request, {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+
+                console.log(response);
+
+                if (response.ok === false) {
+                    alert(`Error while sending`);
+                } else {
+                    alert(`Sent successfuly`);
+                }
+            }
+        }
+    </script>
+
+    <body>
+
+        <div class="wrapper">
+
+            <div class="form-floating">
+                <input type="email" class="form-controll" id="emailInput" value="" placeholder="email" required autocomplete="email">
+                <label for="emailInput">Email Address</label>
+            </div>
+
+            <div class="form-floating">
+                <input type="phone" class="form-controll" id="phoneInput" value="" placeholder="phone" required autocomplete="phone">
+                <label for="phoneInput">Phone Number</label>
+            </div>
+
+            <div class="form-floating">
+                <button class="form-button" id="request" onclick="sendForm()">Send</button>
+                <input type="checkbox" id="checkboxInput">
+                <span>subscribe to mail</span>
+            </div>
+
+        </div>
+        
+    </body>
+</html>
